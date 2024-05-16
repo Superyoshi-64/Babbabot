@@ -37,6 +37,18 @@ for (const file of commandFiles) {
 	client.commands.set(command.data.name, command);
 }
 
+// Array Definitions
+let catImages = ['cat1', 'cat2', 'cat3', 'cat4', 'cat5', 'cat6', 'cat7', 'cat8', 'cat9', 'cat10', 'cat11', 'cat12', 'cat13', 'cat14', 'cat15', 'cat16', 'cat17', 'cat18', 'cat19', 'cat20', 'cat21', 'cat22', 'cat23', 'cat24', 'cat25', 'cat26', 'cat27', 'cat28', 'cat29', 'cat30', 'cat31', 'notcat1'];
+catImages = catImages.map(i => 'images/cat/' + i);
+catImages = catImages.map(i => i + '.jpg');
+let rule34Images = ['bob1', 'idontwannaknow1', 'isaiah1', 'isaiah2', 'isaiah3', 'isaiah4', 'isaiah5', 'isaiah6', 'isaiah7', 'isaiah8', 'josiah1', 'ryan1', 'zavier1'];
+rule34Images = rule34Images.map(i => 'images/rule34/' + i);
+rule34Images = rule34Images.map(i => i + '.jpg');
+let zooImages = ['zoo1', 'zoo2', 'zoo3', 'zoo4', 'zoo5', 'zoo6', 'zoo7', 'zoo8', 'zoo9', 'zoo10', 'zoo11', 'zoo12', 'zoo13', 'zoo14', 'zoo15', 'zoo16', 'zoo17', 'zoo18', 'zoo19', 'zoo20', 'zoo21'];
+zooImages = zooImages.map(i => 'images/zoo/' + i);
+zooImages = zooImages.map(i => i + '.jpg');
+const allImages = catImages.concat(rule34Images, zooImages);
+
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
 
@@ -44,13 +56,10 @@ client.on('interactionCreate', async interaction => {
 
 	try {
 		if (commandName === 'rule34') {
-			await interaction.reply('As of 10:46 PM, May 13, 2024, Isaiah has 28426 Favorites on Rule 34.\nHe\'s added 19 Favorites since the last update.');
+			await interaction.reply('As of 11:54 AM, May 15, 2024, Isaiah has 28505 Favorites on Rule 34.\nHe\'s added 79 Favorites since the last update.');
 		}
 		else if (commandName === 'notsorule34') {
 			const deleteMessage = interaction.options.getBoolean('delete');
-			let rule34Images = ['bob1', 'idontwannaknow1', 'isaiah1', 'isaiah2', 'isaiah3', 'isaiah4', 'isaiah5', 'isaiah6', 'isaiah7', 'isaiah8', 'josiah1', 'ryan1', 'zavier1'];
-			rule34Images = rule34Images.map(i => 'images/rule34/' + i);
-			rule34Images = rule34Images.map(i => i + '.jpg');
 			const random = Math.floor(Math.random() * rule34Images.length);
 			const attachment = new MessageAttachment(rule34Images[random]);
 			await interaction.reply({ files: [ attachment ] });
@@ -70,14 +79,22 @@ client.on('interactionCreate', async interaction => {
 		}
 		else if (commandName === 'cat') {
 			await interaction.deferReply();
-			let catImages = ['cat1', 'cat2', 'cat3', 'cat4', 'cat5', 'cat6', 'cat7', 'cat8', 'cat9', 'cat10', 'cat11', 'cat12', 'cat13', 'cat14', 'cat15', 'cat16', 'cat17', 'cat18', 'cat19', 'cat20', 'cat21', 'cat22', 'cat23', 'cat24', 'cat25', 'cat26', 'cat27', 'cat28', 'cat29', 'cat30', 'cat31', 'notcat1'];
-			catImages = catImages.map(i => 'images/cat/' + i);
-			catImages = catImages.map(i => i + '.jpg');
 			const random = Math.floor(Math.random() * catImages.length);
 			const attachment = new MessageAttachment(catImages[random]);
 			await interaction.editReply({ files: [ attachment ] });
 		}
-
+		else if (commandName === 'zoo') {
+			await interaction.deferReply();
+			const random = Math.floor(Math.random() * zooImages.length);
+			const attachment = new MessageAttachment(zooImages[random]);
+			await interaction.editReply({ files: [ attachment ] });
+		}
+		else if (commandName === '75-25') {
+			await interaction.deferReply();
+			const random = Math.floor(Math.random() * allImages.length);
+			const attachment = new MessageAttachment(allImages[random]);
+			await interaction.editReply({ files: [ attachment ] });
+		}
 		else if (commandName === 'fuckyou') {
 			const user = interaction.options.getUser('user');
 			if (user === client.user) {
