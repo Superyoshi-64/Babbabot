@@ -38,97 +38,117 @@ zooImages = zooImages.map(i => 'images/zoo/' + i + '.jpg');
 const allImages = catImages.concat(rule34Images, zooImages);
 
 
-// THE COMMAND BLOCK
+// THE COMMAND AND BUTTON BLOCK
 client.on('interactionCreate', async interaction => {
-	if (!interaction.isCommand()) return;
+	if (interaction.isCommand()) {
 
-	const { commandName } = interaction;
+		const { commandName } = interaction;
 
-	try {
-		// Command that shows Isaiah's rule 34 favorites.
-		if (commandName === 'rule34') {
-			await interaction.reply('As of 6:18 AM, May 16, 2024, Isaiah has 28509 Favorites on Rule 34.\nHe\'s added 4 Favorites since the last update.');
-		}
+		try {
+			// Command that shows Isaiah's rule 34 favorites.
+			if (commandName === 'rule34') {
+				await interaction.reply('As of 8:22 AM, May 17, 2024, Isaiah has 28516 Favorites on Rule 34.\nHe\'s added 7 Favorites since the last update.');
+			}
 
-		// The... porn command...
-		else if (commandName === 'notsorule34') {
-			const deleteMessage = interaction.options.getBoolean('delete');
-			const random = Math.floor(Math.random() * rule34Images.length);
-			const attachment = new MessageAttachment(rule34Images[random]);
-			await interaction.reply({ files: [ attachment ] });
-			if (deleteMessage !== false) {
-				await wait(60000);
-				try {
-					const testForInteraction = interaction.id
-						.then(await interaction.deleteReply(), console.log('The deletion succeded.'));
-					if (testForInteraction === 'gone') {
-						console.log('how?');
+			// The... porn command...
+			else if (commandName === 'notsorule34') {
+				const deleteMessage = interaction.options.getBoolean('delete');
+				const random = Math.floor(Math.random() * rule34Images.length);
+				const attachment = new MessageAttachment(rule34Images[random]);
+				await interaction.reply({ files: [ attachment ] });
+				if (deleteMessage !== false) {
+					await wait(60000);
+					try {
+						const testForInteraction = interaction.id
+							.then(await interaction.deleteReply(), console.log('The deletion succeded.'));
+						if (testForInteraction === 'gone') {
+							console.log('how?');
+						}
+					}
+					catch (error) {
+						return;
 					}
 				}
-				catch (error) {
+			}
+
+			// Cat pictures command
+			else if (commandName === 'cat') {
+				await interaction.deferReply();
+				const random = Math.floor(Math.random() * catImages.length);
+				const attachment = new MessageAttachment(catImages[random]);
+				await interaction.editReply({ files: [ attachment ] });
+			}
+
+			// Zoo pictures command
+			else if (commandName === 'zoo') {
+				await interaction.deferReply();
+				const random = Math.floor(Math.random() * zooImages.length);
+				const attachment = new MessageAttachment(zooImages[random]);
+				await interaction.editReply({ files: [ attachment ] });
+			}
+
+			// All images command. The name of this may change depending on the normal image to porn image ratio.
+			else if (commandName === '75-25') {
+				await interaction.deferReply();
+				const random = Math.floor(Math.random() * allImages.length);
+				const attachment = new MessageAttachment(allImages[random]);
+				await interaction.editReply({ files: [ attachment ] });
+			}
+
+			// The command that sends the ANONYMOUS fuck you message.
+			else if (commandName === 'fuckyou') {
+				const user = interaction.options.getUser('user');
+				if (user === client.user) {
+					await interaction.reply({ content: 'FUCK YOU I AIN\'T JUST GONNA FUCK MYSELF', ephemeral: true });
 					return;
 				}
+				await interaction.reply({ content: 'it did thing', ephemeral: true });
+				await interaction.channel.send(`FUCK YOU ${user}`).then(msg => setTimeout(() => msg.delete(), 600000));
+			}
+
+			// The strange sex command
+			else if (commandName === 'sex') {
+				const buttonRow = new MessageActionRow()
+					.addComponents(
+						new MessageButton()
+							.setCustomId('confirm_sex')
+							.setLabel('Yes')
+							.setStyle('DANGER'),
+						new MessageButton()
+							.setCustomId('decline_sex')
+							.setLabel('No')
+							.setStyle('SECONDARY'),
+					);
+
+				await interaction.reply({ content: 'Are you sure you want to sex the bot?', components: [buttonRow] });
 			}
 		}
-
-		// Cat pictures command
-		else if (commandName === 'cat') {
-			await interaction.deferReply();
-			const random = Math.floor(Math.random() * catImages.length);
-			const attachment = new MessageAttachment(catImages[random]);
-			await interaction.editReply({ files: [ attachment ] });
-		}
-
-		// Zoo pictures command
-		else if (commandName === 'zoo') {
-			await interaction.deferReply();
-			const random = Math.floor(Math.random() * zooImages.length);
-			const attachment = new MessageAttachment(zooImages[random]);
-			await interaction.editReply({ files: [ attachment ] });
-		}
-
-		// All images command. The name of this may change depending on the normal image to porn image ratio.
-		else if (commandName === '75-25') {
-			await interaction.deferReply();
-			const random = Math.floor(Math.random() * allImages.length);
-			const attachment = new MessageAttachment(allImages[random]);
-			await interaction.editReply({ files: [ attachment ] });
-		}
-
-		// The command that sends the ANONYMOUS fuck you message.
-		else if (commandName === 'fuckyou') {
-			const user = interaction.options.getUser('user');
-			if (user === client.user) {
-				await interaction.reply({ content: 'FUCK YOU I AIN\'T JUST GONNA FUCK MYSELF', ephemeral: true });
-				return;
-			}
-			await interaction.reply({ content: 'it did thing', ephemeral: true });
-			await interaction.channel.send(`FUCK YOU ${user}`).then(msg => setTimeout(() => msg.delete(), 600000));
-		}
-
-		// The strange sex command
-		else if (commandName === 'sex') {
-			const buttonRow = new MessageActionRow()
-				.addComponents(
-					new MessageButton()
-						.setCustomId('confirm_sex')
-						.setLabel('Yes')
-						.setStyle('DANGER'),
-					new MessageButton()
-						.setCustomId('decline_sex')
-						.setLabel('No')
-						.setStyle('SECONDARY'),
-				);
-
-			await interaction.reply({ content: 'Are you sure you want to sex the bot?', components: [buttonRow] });
+		// Catch an error and tell the user and console the error.
+		catch (error) {
+			console.error(error);
+			await interaction.reply({ content: `Bot FUCKED UP how dissappointing\n\nAnyways, you probably don't understand this but here's the error:\n\n${error}`, ephemeral: true });
 		}
 	}
-	// Catch an error and tell the user and console the error.
-	catch (error) {
-		console.error(error);
-		await interaction.reply({ content: `Bot FUCKED UP how dissappointing\n\nAnyways, you probably don't understand this but here's the error:\n\n${error}`, ephemeral: true });
+	else if (interaction.isButton()) {
+
+		try {
+			if (interaction.customId === 'confirm_sex') {
+				await interaction.reply('You don\'t get to sex the bot yet.');
+				console.log('Yes');
+			}
+			else if (interaction.customId === 'decline_sex') {
+				await interaction.reply('You did not sex the bot.');
+				console.log('No');
+			}
+		}
+		// Catch an error and tell the user and console the error.
+		catch (error) {
+			console.error(error);
+			await interaction.reply({ content: `Bot FUCKED UP how dissappointing\n\nAnyways, you probably don't understand this but here's the error:\n\n${error}`, ephemeral: true });
+		}
 	}
 });
+
 
 // Detect if a sent message mentions the bot so it can tell them to fuck off.
 client.on('messageCreate', async (message) => {
