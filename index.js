@@ -2,7 +2,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const discordModals = require('discord-modals');
-const { Client, Intents, MessageAttachment, MessageActionRow, MessageButton } = require('discord.js');
+const { Client, Intents, MessageAttachment, MessageActionRow, MessageButton, MessageEmbed } = require('discord.js');
 const { token } = require('./config.json');
 const wait = require('node:timers/promises').setTimeout;
 
@@ -47,7 +47,7 @@ client.on('interactionCreate', async interaction => {
 		try {
 			// Command that shows Isaiah's rule 34 favorites.
 			if (commandName === 'rule34') {
-				await interaction.reply('As of 8:22 AM, May 17, 2024, Isaiah has 28516 Favorites on Rule 34.\nHe\'s added 7 Favorites since the last update.');
+				await interaction.reply('As of 4:18 AM, May 19, 2024, Isaiah has 28584 Favorites on Rule 34.\nHe\'s added 68 Favorites since the last update.');
 			}
 
 			// The... porn command...
@@ -133,12 +133,47 @@ client.on('interactionCreate', async interaction => {
 
 		try {
 			if (interaction.customId === 'confirm_sex') {
-				await interaction.reply('You don\'t get to sex the bot yet.');
-				console.log('Yes');
+				await interaction.reply('...');
+				const buttonRow = new MessageActionRow()
+					.addComponents(
+						new MessageButton()
+							.setCustomId('second_confirm_sex')
+							.setLabel('Yes')
+							.setStyle('DANGER'),
+						new MessageButton()
+							.setCustomId('second_decline_sex')
+							.setLabel('No')
+							.setStyle('SUCCESS'),
+					);
+				await wait(3000);
+				await interaction.followUp({ content: 'ARE YOU REALLY SURE YOU WANT TO SEX THE BOT?', components: [buttonRow] });
 			}
 			else if (interaction.customId === 'decline_sex') {
 				await interaction.reply('You did not sex the bot.');
-				console.log('No');
+			}
+			else if (interaction.customId === 'second_confirm_sex') {
+				await interaction.reply('...');
+				await wait(1000);
+				await interaction.followUp('...');
+				await wait(1000);
+				await interaction.followUp('...');
+				await wait(3000);
+				await interaction.followUp('You are currently having sex... Please wait...');
+				const userEnjoyment = Math.floor(Math.random() * 100);
+				const botEnjoyment = Math.floor(Math.random() * 100);
+				const sexEmbed = new MessageEmbed()
+					.setColor(0xAAE5A4)
+					.setTitle('Sex')
+					.addFields(
+						{ name: 'Your Enjoyment:', value: `${userEnjoyment}%` },
+						{ name: 'Their Enjoyment', value: `${botEnjoyment}%` },
+					)
+					.setFooter({ text: 'Totally not just based on BitLife.' });
+				await wait(10000);
+				await interaction.followUp({ content: '# You finished having sex', embeds: [sexEmbed] });
+			}
+			else if (interaction.customId === 'second_decline_sex') {
+				await interaction.reply('You did not sex the bot');
 			}
 		}
 		// Catch an error and tell the user and console the error.
