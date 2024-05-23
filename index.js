@@ -50,7 +50,7 @@ client.on('interactionCreate', async interaction => {
 		try {
 			// Command that shows Isaiah's rule 34 favorites.
 			if (commandName === 'rule34') {
-				await interaction.reply('As of 6:42 PM, May 19, 2024, Isaiah has 28573 Favorites on Rule 34.\nHe\'s **lost** 11 Favorites since the last update.');
+				await interaction.reply('As of 9:40 AM, May 23, 2024, Isaiah has 28675 Favorites on Rule 34.\nHe\'s gained 102 Favorites since the last update.');
 			}
 
 			// The... porn command...
@@ -106,7 +106,7 @@ client.on('interactionCreate', async interaction => {
 					return;
 				}
 				await interaction.reply({ content: 'it did thing', ephemeral: true });
-				await interaction.channel.send(`FUCK YOU ${user}`).then(msg => setTimeout(() => msg.delete(), 600000));
+				await interaction.channel.send(`FUCK YOU ${user}`);
 			}
 
 			// The strange sex command
