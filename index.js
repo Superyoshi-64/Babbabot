@@ -5,6 +5,7 @@ const discordModals = require('discord-modals');
 const { Client, Intents, MessageAttachment, MessageActionRow, MessageButton, MessageEmbed } = require('discord.js');
 const { token } = require('./config.json');
 const wait = require('node:timers/promises').setTimeout;
+let sexCommandInteractionUser;
 
 // Define the actual client/bot
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES ] });
@@ -40,14 +41,16 @@ const allImages = catImages.concat(rule34Images, zooImages);
 
 // THE COMMAND AND BUTTON BLOCK
 client.on('interactionCreate', async interaction => {
+	// if (interaction.user.id != '580898252602343425' && '708437777901027360') {
+	// 	await interaction.reply('The bot is currently in testing mode. You are not able to interact with it right now.');
+	// 	return;
+	// }
 	if (interaction.isCommand()) {
-
 		const { commandName } = interaction;
-
 		try {
 			// Command that shows Isaiah's rule 34 favorites.
 			if (commandName === 'rule34') {
-				await interaction.reply('As of 4:18 AM, May 19, 2024, Isaiah has 28584 Favorites on Rule 34.\nHe\'s added 68 Favorites since the last update.');
+				await interaction.reply('As of 6:42 PM, May 19, 2024, Isaiah has 28573 Favorites on Rule 34.\nHe\'s **lost** 11 Favorites since the last update.');
 			}
 
 			// The... porn command...
@@ -108,6 +111,7 @@ client.on('interactionCreate', async interaction => {
 
 			// The strange sex command
 			else if (commandName === 'sex') {
+				sexCommandInteractionUser = interaction.user.id;
 				const buttonRow = new MessageActionRow()
 					.addComponents(
 						new MessageButton()
@@ -119,8 +123,26 @@ client.on('interactionCreate', async interaction => {
 							.setLabel('No')
 							.setStyle('SECONDARY'),
 					);
-
 				await interaction.reply({ content: 'Are you sure you want to sex the bot?', components: [buttonRow] });
+				// Start a collector to disable buttons once clicked
+				const collector = interaction.channel.createMessageComponentCollector({ componentType: 'BUTTON', time: 30000 });
+				collector.on('collect', i => {
+					if (i.user.id === interaction.user.id) {
+						buttonRow.components[0].setDisabled(true);
+						buttonRow.components[1].setDisabled(true);
+						interaction.editReply({ content: 'Are you sure you want to sex the bot?', components: [buttonRow] });
+					}
+					else {
+						i.channel.send(`Fuck off ${i.user} these aren't your buttons.`);
+					}
+				});
+				collector.on('end', collected => {
+					if (collected.size > 0) return;
+					buttonRow.components[0].setDisabled(true);
+					buttonRow.components[1].setDisabled(true);
+					interaction.editReply({ content: 'Are you sure you want to sex the bot?', components: [buttonRow] });
+					interaction.followUp({ content: 'You ran out of time to respond.', ephemeral: true });
+				});
 			}
 		}
 		// Catch an error and tell the user and console the error.
@@ -130,10 +152,11 @@ client.on('interactionCreate', async interaction => {
 		}
 	}
 	else if (interaction.isButton()) {
-
 		try {
+			// First Confirm Sex Button
 			if (interaction.customId === 'confirm_sex') {
-				await interaction.reply('...');
+				if (interaction.user.id != sexCommandInteractionUser) return;
+				await interaction.channel.send('...');
 				const buttonRow = new MessageActionRow()
 					.addComponents(
 						new MessageButton()
@@ -145,22 +168,39 @@ client.on('interactionCreate', async interaction => {
 							.setLabel('No')
 							.setStyle('SUCCESS'),
 					);
-				await wait(3000);
-				await interaction.followUp({ content: 'ARE YOU REALLY SURE YOU WANT TO SEX THE BOT?', components: [buttonRow] });
+				await wait(1500);
+				await interaction.reply({ content: 'ARE YOU REALLY SURE YOU WANT TO SEX THE BOT?', components: [buttonRow] });
+				// Start a collector to disable buttons once clicked
+				const collector = interaction.channel.createMessageComponentCollector({ componentType: 'BUTTON', time: 30000 });
+				collector.on('collect', i => {
+					if (i.user.id === interaction.user.id) {
+						buttonRow.components[0].setDisabled(true);
+						buttonRow.components[1].setDisabled(true);
+						interaction.editReply({ content: 'ARE YOU REALLY SURE YOU WANT TO SEX THE BOT?', components: [buttonRow] });
+					}
+					else {
+						i.channel.send(`Fuck off ${i.user} these aren't your buttons.`);
+					}
+				});
+				collector.on('end', collected => {
+					if (collected.size > 0) return;
+					buttonRow.components[0].setDisabled(true);
+					buttonRow.components[1].setDisabled(true);
+					interaction.editReply({ content: 'Are you sure you want to sex the bot?', components: [buttonRow] });
+					interaction.followUp({ content: 'You ran out of time to respond.', ephemeral: true });
+				});
 			}
+			// First Decline Sex Button
 			else if (interaction.customId === 'decline_sex') {
+				if (interaction.user.id != sexCommandInteractionUser) return;
 				await interaction.reply('You did not sex the bot.');
 			}
+			// Second Confirm Sex Button
 			else if (interaction.customId === 'second_confirm_sex') {
-				await interaction.reply('...');
-				await wait(1000);
-				await interaction.followUp('...');
-				await wait(1000);
-				await interaction.followUp('...');
-				await wait(3000);
-				await interaction.followUp('You are currently having sex... Please wait...');
-				const userEnjoyment = Math.floor(Math.random() * 100);
-				const botEnjoyment = Math.floor(Math.random() * 100);
+				if (interaction.user.id != sexCommandInteractionUser) return;
+				await interaction.reply('You are currently having sex... Please wait...');
+				const userEnjoyment = Math.round(Math.random() * 100);
+				const botEnjoyment = Math.round(Math.random() * 100);
 				const sexEmbed = new MessageEmbed()
 					.setColor(0xAAE5A4)
 					.setTitle('Sex')
@@ -172,7 +212,9 @@ client.on('interactionCreate', async interaction => {
 				await wait(10000);
 				await interaction.followUp({ content: '# You finished having sex', embeds: [sexEmbed] });
 			}
+			// Second Decline Sex Button
 			else if (interaction.customId === 'second_decline_sex') {
+				if (interaction.user.id != sexCommandInteractionUser) return;
 				await interaction.reply('You did not sex the bot');
 			}
 		}
