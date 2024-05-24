@@ -9,7 +9,7 @@ const commands = [
 	new SlashCommandBuilder().setName('fuckyou').setDescription('FUCK YOU').addUserOption(option => option.setName('user').setDescription('user').setRequired(true)),
 	new SlashCommandBuilder().setName('cat').setDescription('Cleanse your eyes after seeing some other stuff.'),
 	new SlashCommandBuilder().setName('zoo').setDescription('ZOO'),
-	new SlashCommandBuilder().setName('75-25').setDescription('Test your luck and see if you get a good image or a bad image out of the bot\'s entire image library.'),
+	new SlashCommandBuilder().setName('74-26').setDescription('Test your luck and see if you get a good image or a bad image out of the bot\'s entire image library.'),
 	new SlashCommandBuilder().setName('sex').setDescription('HUH'),
 ]
 	.map(command => command.toJSON());

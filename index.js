@@ -50,7 +50,7 @@ client.on('interactionCreate', async interaction => {
 		try {
 			// Command that shows Isaiah's rule 34 favorites.
 			if (commandName === 'rule34') {
-				await interaction.reply('As of 10:43 AM, May 23, 2024, Isaiah has 28927 Favorites on Rule 34.\nHe\'s gained 252 Favorites since the last update.');
+				await interaction.reply('As of 10:59 AM, May 24, 2024, Isaiah has 28933 Favorites on Rule 34.\nHe\'s gained 6 Favorites since the last update.');
 			}
 
 			// The... porn command...
@@ -91,7 +91,7 @@ client.on('interactionCreate', async interaction => {
 			}
 
 			// All images command. The name of this may change depending on the normal image to porn image ratio.
-			else if (commandName === '75-25') {
+			else if (commandName === '74-26') {
 				await interaction.deferReply();
 				const random = Math.floor(Math.random() * allImages.length);
 				const attachment = new MessageAttachment(allImages[random]);
