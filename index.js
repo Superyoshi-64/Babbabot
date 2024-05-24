@@ -32,7 +32,7 @@ for (const file of eventFiles) {
 // Array definitions block, defines all the pictures used in the commands.
 let catImages = ['cat1', 'cat2', 'cat3', 'cat4', 'cat5', 'cat6', 'cat7', 'cat8', 'cat9', 'cat10', 'cat11', 'cat12', 'cat13', 'cat14', 'cat15', 'cat16', 'cat17', 'cat18', 'cat19', 'cat20', 'cat21', 'cat22', 'cat23', 'cat24', 'cat25', 'cat26', 'cat27', 'cat28', 'cat29', 'cat30', 'cat31', 'notcat1'];
 catImages = catImages.map(i => 'images/cat/' + i + '.jpg');
-let rule34Images = ['bob1', 'idontwannaknow1', 'isaiah1', 'isaiah2', 'isaiah3', 'isaiah4', 'isaiah5', 'isaiah6', 'isaiah7', 'isaiah8', 'josiah1', 'ryan1', 'zavier1'];
+let rule34Images = ['bob1', 'group1', 'idontwannaknow1', 'isaiah1', 'isaiah2', 'isaiah3', 'isaiah4', 'isaiah5', 'isaiah6', 'isaiah7', 'isaiah8', 'josiah1', 'ryan1', 'zavier1'];
 rule34Images = rule34Images.map(i => 'images/rule34/' + i + '.jpg');
 let zooImages = ['zoo1', 'zoo2', 'zoo3', 'zoo4', 'zoo5', 'zoo6', 'zoo7', 'zoo8', 'zoo9', 'zoo10', 'zoo11', 'zoo12', 'zoo13', 'zoo14', 'zoo15', 'zoo16', 'zoo17', 'zoo18', 'zoo19', 'zoo20', 'zoo21'];
 zooImages = zooImages.map(i => 'images/zoo/' + i + '.jpg');
@@ -50,7 +50,7 @@ client.on('interactionCreate', async interaction => {
 		try {
 			// Command that shows Isaiah's rule 34 favorites.
 			if (commandName === 'rule34') {
-				await interaction.reply('As of 9:40 AM, May 23, 2024, Isaiah has 28675 Favorites on Rule 34.\nHe\'s gained 102 Favorites since the last update.');
+				await interaction.reply('As of 10:43 AM, May 23, 2024, Isaiah has 28927 Favorites on Rule 34.\nHe\'s gained 252 Favorites since the last update.');
 			}
 
 			// The... porn command...
