@@ -50,7 +50,7 @@ client.on('interactionCreate', async interaction => {
 		try {
 			// Command that shows Isaiah's rule 34 favorites.
 			if (commandName === 'rule34') {
-				await interaction.reply('As of 10:59 AM, May 24, 2024, Isaiah has 28933 Favorites on Rule 34.\nHe\'s gained 6 Favorites since the last update.');
+				await interaction.reply('# As of 13:32, May 30, 2024, Isaiah has 29725 Favorites on Rule 34.\n # He\'s gained 2 Favorites since the last update.');
 			}
 
 			// The... porn command...
